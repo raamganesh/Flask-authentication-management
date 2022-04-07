@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
 
 class Insight(UserMixin, db.Model):
     __tablename__ = "insight"
+
     id = db.Column(db.String(50), primary_key=True)
     name = db.Column(db.String(50))
     symbol = db.Column(db.String(50))
