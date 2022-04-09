@@ -8,7 +8,7 @@ RUN apk --no-cache update \
 						python3-dev \
 						gpgme-dev \
 						build-base \
- && pip install -r lite_req.txt
+ && pip install -r requirements.txt
 
 ENV FLASK_APP=app_auth
 ENV FLASK_DEBUG=1
