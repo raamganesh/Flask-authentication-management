@@ -8,18 +8,24 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
+    """Render template for index page
+    """
     return render_template("index.html")
 
 
 @main.route("/profile")
 @login_required
 def profile():
+    """Render template for profile
+    """
     return render_template("profile.html", user_name=current_user.name)
 
 
 @main.route("/profile", methods=["POST"])
 @login_required
 def profile_post():
+    """POST method to get request from customer to return requested data on profile detail page
+    """
     slug = request.form.get("slug")
     data = Insight.query.filter_by(slug=slug).first()
 

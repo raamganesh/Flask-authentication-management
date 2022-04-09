@@ -3,6 +3,8 @@ from . import db
 
 
 class User(UserMixin, db.Model):
+    """Initiating user table
+    """
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
@@ -11,6 +13,8 @@ class User(UserMixin, db.Model):
 
 
 class Insight(UserMixin, db.Model):
+    """Initiating insight table
+    """
     __tablename__ = "insight"
 
     id = db.Column(db.String(50), primary_key=True)

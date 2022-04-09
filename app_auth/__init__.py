@@ -1,23 +1,27 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from decouple import config
-import pandas as pd
+from decouple import Config, RepositoryEnv
+
+DOTENV_FILE = '.env'
+env_config = Config(RepositoryEnv(DOTENV_FILE))
 
 db = SQLAlchemy()
 
 
 def create_app():
+    """Initialize flask context and database instance according to configurating and data models
+    """
     app = Flask(__name__)
     # Google Cloud SQL (change this accordingly)
-    PASSWORD = config("password")
-    PUBLIC_IP_ADDRESS = config("public_ip_address")
-    DBNAME = config("dbname")
-    PROJECT_ID = config("project_id")
-    INSTANCE_NAME = config("instance_name")
+    PASSWORD = env_config.get("PASSWORD")
+    PUBLIC_IP_ADDRESS = env_config.get("PUBLIC_IP_ADDRESS")
+    DBNAME = env_config.get("DBNAME")
+    PROJECT_ID = env_config.get("PROJECT_ID")
+    INSTANCE_NAME = env_config.get("INSTANCE_NAME")
 
     # configuration
-    app.config["SECRET_KEY"] = config("secret_key")
+    app.config["SECRET_KEY"] = env_config.get("SECRET_KEY")
     app.config[
         "SQLALCHEMY_DATABASE_URI"] = f'mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket=/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
