@@ -5,28 +5,23 @@ from .data_model import Insight
 
 main = Blueprint("main", __name__)
 
-
 @main.route("/")
 def index():
-    """Render template for index page
-    """
     return render_template("index.html")
-
 
 @main.route("/profile")
 @login_required
 def profile():
     """Render template for profile
     """
-    return render_template("profile.html", user_name=current_user.name)
+    return render_template("profile.html")
 
-
-@main.route("/profile", methods=["POST"])
+@main.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile_post():
     """POST method to get request from customer to return requested data on profile detail page
-    """
-    slug = request.form.get("slug")
+        """
+    slug = request.form.get("text")
     data = Insight.query.filter_by(slug=slug).first()
 
     return render_template(
@@ -40,6 +35,4 @@ def profile_post():
         quote_GBP_volume_24h=data.quote_GBP_volume_24h,
         quote_GBP_volume_change_24h=data.quote_GBP_volume_change_24h,
         quote_GBP_percent_change_1h=data.quote_GBP_percent_change_1h,
-        quote_GBP_percent_change_24h=data.quote_GBP_percent_change_24h,
-        sentiment=data.sentiment,
-        popularity=data.popularity)
+        quote_GBP_percent_change_24h=data.quote_GBP_percent_change_24h)
